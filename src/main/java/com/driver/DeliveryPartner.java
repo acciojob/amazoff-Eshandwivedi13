@@ -9,10 +9,6 @@ public class DeliveryPartner {
         this.id = id;
         this.numberOfOrders = 0;
     }
-    public DeliveryPartner(){
-
-    }
-
     public String getId() {
         return id;
     }
