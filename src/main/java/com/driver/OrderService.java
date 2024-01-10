@@ -131,7 +131,7 @@ public class OrderService {
     public void deletePartnerById(String partnerId){
         //Delete the partnerId
         //And push all his assigned orders to unassigned orders.
-        HashMap<String, Order> orderDb = repoObj.getOrderDb();
+//        HashMap<String, Order> orderDb = repoObj.getOrderDb();
         HashMap<String, List<String>>  orderPartnerDb = repoObj.getOrdersOfDeliveryPartnersDb();
         HashMap<String, DeliveryPartner>  deliveryPartnerDb = repoObj.getDeliveryPartnerDb();
         HashMap<String, String>  orderXPartnerDb = repoObj.getOrderXPartnerDb();
@@ -150,6 +150,7 @@ public class OrderService {
         }
         repoObj.setOrdersOfDeliveryPartnersDb(orderPartnerDb);
         repoObj.setDeliveryPartnerDb(deliveryPartnerDb);
+        repoObj.setOrderXPartnerDb(orderXPartnerDb);
     }
     public void deleteOrderById(String orderId){
         //Delete the partnerId
@@ -171,12 +172,13 @@ public class OrderService {
                    break;
                }
            }
+           orderPartnerDb.put(partnerId, orders);
            deliveryPartnerDb.get(partnerId).setNumberOfOrders(orders.size());
        }
         repoObj.setOrdersOfDeliveryPartnersDb(orderPartnerDb);
         repoObj.setDeliveryPartnerDb(deliveryPartnerDb);
         repoObj.setOrderDb(orderDb);
-
+        repoObj.setOrdersOfDeliveryPartnersDb(orderPartnerDb);
 
 //    setNumberOfOrders(deliveryPartnerDb.get(partnerId).size());
     }
