@@ -35,7 +35,10 @@ public class OrderRepository {
 
     public void addOrder(Order order){
         String dbkey = order.getId();
-        orderDb.put(dbkey, order);
+        int dTime = order.getDeliveryTime();
+        if(dbkey.length() != 0 && dTime != 0){
+            orderDb.put(dbkey, order);
+        }
     }
     public void addPartner(DeliveryPartner partner){
         String dbkey = partner.getId();
