@@ -117,8 +117,8 @@ public class OrderService {
         int hr =  lastDeliveryTime / 60 ;
         int mint = lastDeliveryTime % 60;
         // now convert this time from int to string
-        String hours =  String.valueOf(hr);
-        String minutes = String.valueOf(mint);
+        String hours =  String.format("%02d", hr);//String.valueOf(hr);
+        String minutes = String.format("%02d", mint);//String.valueOf(mint);
         return (hours + ":" + minutes);
     }
 
