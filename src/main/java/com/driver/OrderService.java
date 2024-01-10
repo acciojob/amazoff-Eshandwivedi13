@@ -35,8 +35,9 @@ public class OrderService {
         List<String> temp = orderDeliveryPartnersDb.getOrDefault(partnerId, new ArrayList<>());
         temp.add(orderId);
         orderDeliveryPartnersDb.put(partnerId, temp);
-        deliveryPartnerDb.get(partnerId).setNumberOfOrders(temp.size());//orderDeliveryPartnerDb's list.size
+        deliveryPartnerDb.get(partnerId).setNumberOfOrders(orderDeliveryPartnersDb.get(partnerId).size());//orderDeliveryPartnerDb's list.size
         orderXPartnerDb.put(orderId, partnerId);
+//        repoObj.setDeliveryPartnerDb(deliveryPartnerDb);
         repoObj.setOrdersOfDeliveryPartnersDb(orderDeliveryPartnersDb);
         repoObj.setOrderXPartnerDb(orderXPartnerDb);
     }
@@ -57,8 +58,8 @@ public class OrderService {
     }
 
     public List<String> getOrdersByPartnerId(String partnerId){
-        HashMap<String, List<String>> deliveryPartnerDb = repoObj.getOrdersOfDeliveryPartnersDb();
-        return deliveryPartnerDb.getOrDefault(partnerId, new ArrayList<>());
+        HashMap<String, List<String>> orderDeliveryPartnerDb = repoObj.getOrdersOfDeliveryPartnersDb();
+        return orderDeliveryPartnerDb.getOrDefault(partnerId, null);
     }
 
     public List<String> getAllOrders(){
@@ -68,20 +69,22 @@ public class OrderService {
         for(String order : orderDb.keySet()){
             orders.add(order);
         }
+//        if(orders.size() == 0) return null;
         return orders;
     }
     public Integer getCountOfUnassignedOrders(){//can have problems for sure
         HashMap<String, Order> orderDb = repoObj.getOrderDb();
-        HashMap<String, List<String>> ordersOfDeliveryPartners = repoObj.getOrdersOfDeliveryPartnersDb();
-        HashSet<String> assignedOrdersAll = new HashSet<>();
-        for(String deliveryPartner : ordersOfDeliveryPartners.keySet()){
-            assignedOrdersAll.addAll(ordersOfDeliveryPartners.get(deliveryPartner));
-        }
-        Integer totalOrders = orderDb.size();
-        Integer ordersHavingDeliveryPartners = assignedOrdersAll.size();
-        Integer unAssignedOrders = totalOrders - ordersHavingDeliveryPartners;
-        return unAssignedOrders;
-        //return orderDb.size() - orderXPartnerDb.size();
+        HashMap<String, String> orderXPartnerDb = repoObj.getOrderXPartnerDb();
+//        HashMap<String, List<String>> ordersOfDeliveryPartners = repoObj.getOrdersOfDeliveryPartnersDb();
+//        HashSet<String> assignedOrdersAll = new HashSet<>();
+//        for(String deliveryPartner : ordersOfDeliveryPartners.keySet()){
+//            assignedOrdersAll.addAll(ordersOfDeliveryPartners.get(deliveryPartner));
+//        }
+//        Integer totalOrders = orderDb.size();
+//        Integer ordersHavingDeliveryPartners = assignedOrdersAll.size();
+//        Integer unAssignedOrders = totalOrders - ordersHavingDeliveryPartners;
+//        return unAssignedOrders;
+        return orderDb.size() - orderXPartnerDb.size();
     }
     public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId){
         //countOfOrders that are left after a particular time of a DeliveryPartner
@@ -108,6 +111,9 @@ public class OrderService {
         HashMap<String, Order> orderDb = repoObj.getOrderDb();
         HashMap<String, List<String>>  orderPartnerDb = repoObj.getOrdersOfDeliveryPartnersDb();
         List<String> ordersOfAPartnerList = orderPartnerDb.get(partnerId);
+        if(!orderPartnerDb.containsKey(partnerId)){
+            return null;
+        }
         int lastDeliveryTime = Integer.MIN_VALUE;
         for(String ord : ordersOfAPartnerList){
             if(orderDb.get(ord).getDeliveryTime() > lastDeliveryTime){
@@ -115,7 +121,7 @@ public class OrderService {
             }
         }
         int hr =  lastDeliveryTime / 60 ;
-        int mint = lastDeliveryTime % 60;
+        int mint = lastDeliveryTime % 60;//int m = lastDeliveryTime - (h*60);
         // now convert this time from int to string
         String hours =  String.format("%02d", hr);//String.valueOf(hr);
         String minutes = String.format("%02d", mint);//String.valueOf(mint);
