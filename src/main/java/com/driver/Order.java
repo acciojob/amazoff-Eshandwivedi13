@@ -18,7 +18,6 @@ public class Order {
         else{
             this.deliveryTime = 0;
         }
-        System.out.println("Hello");
     }
 
     public String getId() {

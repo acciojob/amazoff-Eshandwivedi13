@@ -128,12 +128,19 @@ public class OrderService {
         HashMap<String, Order> orderDb = repoObj.getOrderDb();
         HashMap<String, List<String>>  orderPartnerDb = repoObj.getOrdersOfDeliveryPartnersDb();
         HashMap<String, DeliveryPartner>  deliveryPartnerDb = repoObj.getDeliveryPartnerDb();
+        HashMap<String, String>  orderXPartnerDb = repoObj.getOrderXPartnerDb();
         if(deliveryPartnerDb.containsKey(partnerId)){
             // remove from partnersDb
             deliveryPartnerDb.remove(partnerId);
         }
+        List<String> orders = new ArrayList<>();
         if(orderPartnerDb.containsKey(partnerId)){
+            orders = orderPartnerDb.get(partnerId);
             orderPartnerDb.remove(partnerId);
+        }
+        for(String oId: orders){
+            // this order should be removed from order vs partner map
+            orderXPartnerDb.remove(oId);
         }
         repoObj.setOrdersOfDeliveryPartnersDb(orderPartnerDb);
         repoObj.setDeliveryPartnerDb(deliveryPartnerDb);
@@ -148,19 +155,23 @@ public class OrderService {
         if(orderDb.containsKey(orderId)){
             orderDb.remove(orderId);
         }
-        String partnerId = orderXPartnerDb.get(orderId);
-        List<String> orders = orderPartnerDb.get(partnerId);
-        for(String order : orders){
-            if(order.equals(orderId)){
-                orders.remove(orderId);
-                break;
-            }
-        }
+       if(orderXPartnerDb.containsKey(orderId)){
+           String partnerId = orderXPartnerDb.get(orderId);
+           orderXPartnerDb.remove(orderId);
+           List<String> orders = orderPartnerDb.get(partnerId);
+           for(String order : orders){
+               if(order.equals(orderId)){
+                   orders.remove(orderId);
+                   break;
+               }
+           }
+           deliveryPartnerDb.get(partnerId).setNumberOfOrders(orders.size());
+       }
         repoObj.setOrdersOfDeliveryPartnersDb(orderPartnerDb);
         repoObj.setDeliveryPartnerDb(deliveryPartnerDb);
         repoObj.setOrderDb(orderDb);
 
-        deliveryPartnerDb.get(partnerId).setNumberOfOrders(orders.size());
+
 //    setNumberOfOrders(deliveryPartnerDb.get(partnerId).size());
     }
 
