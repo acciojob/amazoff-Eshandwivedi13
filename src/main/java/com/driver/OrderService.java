@@ -37,9 +37,10 @@ public class OrderService {
         orderDeliveryPartnersDb.put(partnerId, temp);
         deliveryPartnerDb.get(partnerId).setNumberOfOrders(orderDeliveryPartnersDb.get(partnerId).size());//orderDeliveryPartnerDb's list.size
         orderXPartnerDb.put(orderId, partnerId);
-//        repoObj.setDeliveryPartnerDb(deliveryPartnerDb);
+        repoObj.setDeliveryPartnerDb(deliveryPartnerDb);
         repoObj.setOrdersOfDeliveryPartnersDb(orderDeliveryPartnersDb);
         repoObj.setOrderXPartnerDb(orderXPartnerDb);
+
     }
     public Order getOrderById(String orderId){
        HashMap<String, Order> orderDb = repoObj.getOrderDb();
@@ -51,7 +52,7 @@ public class OrderService {
     }
     public Integer getOrderCountByPartnerId(String partnerId){
         HashMap<String, DeliveryPartner> deliveryPartnerDb = repoObj.getDeliveryPartnerDb();
-        if(!deliveryPartnerDb.containsKey(partnerId)){
+        if(!deliveryPartnerDb.containsKey(partnerId) || deliveryPartnerDb.get(partnerId) == null){
             return 0;
         }
         return deliveryPartnerDb.get(partnerId).getNumberOfOrders();
