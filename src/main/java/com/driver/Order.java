@@ -18,6 +18,14 @@ public class Order {
         else{
             this.deliveryTime = 0;
         }
+//        this.id=id;
+//        String[] timeComponents = deliveryTime.split(":");
+//        int HH = Integer.parseInt(timeComponents[0]);
+//        int MM = Integer.parseInt(timeComponents[1]);
+//        this.deliveryTime=HH*60+MM;
+    }
+    Order(){
+
     }
 
     public String getId() {
