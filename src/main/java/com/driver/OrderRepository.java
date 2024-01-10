@@ -42,8 +42,9 @@ public class OrderRepository {
     }
     public void addPartner(DeliveryPartner partner){
         String dbkey = partner.getId();
-        deliveryPartnerDb.put(dbkey, partner);
-
+        if(dbkey.length() != 0) {
+            deliveryPartnerDb.put(dbkey, partner);
+        }
     }
 
     public void setOrdersOfDeliveryPartnersDb(HashMap<String, List<String>> getOrdersOfDeliveryPartnersDb) {
@@ -54,21 +55,8 @@ public class OrderRepository {
         return getOrdersOfDeliveryPartnersDb;
     }
 
-//    public void addOrderPartnerPair(String orderId, String partnerId){
-//
-//        //This is basically assigning that order to that partnerId
-//    }
-//    public DeliveryPartner getPartnerById(String partnerId){
-//        DeliveryPartner partner = deliveryPartnerDb.get(partnerId);
-//        return  partner;
-//    }
 
     public HashMap<String, DeliveryPartner> getDeliveryPartnerDb() {
         return deliveryPartnerDb;
     }
-    //    public int getOrderCountByPartnerId(String partnerId){
-//        int count = 0;
-//        if()
-//        return count;
-//    }
 }

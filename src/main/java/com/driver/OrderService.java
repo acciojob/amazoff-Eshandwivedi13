@@ -25,17 +25,20 @@ public class OrderService {
         repoObj.addPartner(partner);
     }
     public void addOrderPartnerPair(String orderId, String partnerId){
-        HashMap<String, List<String>> deliveryPartnersDb = repoObj.getOrdersOfDeliveryPartnersDb();
-        if(!deliveryPartnersDb.containsKey(orderId)){
+        HashMap<String, List<String>> orderDeliveryPartnersDb = repoObj.getOrdersOfDeliveryPartnersDb();
+        HashMap<String, DeliveryPartner> deliveryPartnerDb = repoObj.getDeliveryPartnerDb();
+        HashMap<String, Order> orderDb = repoObj.getOrderDb();
+        HashMap<String, String> orderXPartnerDb = repoObj.getOrderXPartnerDb();
+        if(!deliveryPartnerDb.containsKey(partnerId) || !orderDb.containsKey(orderId)){
             return;
         }
-        List<String> temp = deliveryPartnersDb.get(orderId);
+        List<String> temp = orderDeliveryPartnersDb.getOrDefault(orderId, new ArrayList<>());
         temp.add(orderId);
-        deliveryPartnersDb.put(partnerId, temp);
-        repoObj.setOrdersOfDeliveryPartnersDb(deliveryPartnersDb);
-
-//        repoObj.addOrderPartnerPair(orderId, partnerId);
-        //This is basically assigning that order to that partnerId
+        orderDeliveryPartnersDb.put(partnerId, temp);
+        deliveryPartnerDb.get(partnerId).setNumberOfOrders(temp.size());//orderDeliveryPartnerDb's list.size
+        orderXPartnerDb.put(orderId, partnerId);
+        repoObj.setOrdersOfDeliveryPartnersDb(orderDeliveryPartnersDb);
+        repoObj.setOrderXPartnerDb(orderXPartnerDb);
     }
     public Order getOrderById(String orderId){
        HashMap<String, Order> orderDb = repoObj.getOrderDb();
@@ -61,6 +64,7 @@ public class OrderService {
     public List<String> getAllOrders(){
         HashMap<String, Order> orderDb = repoObj.getOrderDb();
         List<String> orders = new ArrayList<>();
+        //List<String> orders = new ArrayList(orderDb.keySet()); // in 1 line, it addes all order string in list
         for(String order : orderDb.keySet()){
             orders.add(order);
         }
