@@ -20,6 +20,11 @@ public class OrderRepository {
             orderDb.put(dbkey, order);
         }
     }
+    public Order getOrderById(String orderId){
+//       HashMap<String, Order> orderDb = repoObj.getOrderDb();
+//        return orderDb.getOrDefault(orderId, null);
+        return orderDb.get(orderId);
+    }
     public void addPartner(DeliveryPartner partner){
         String dbkey = partner.getId();
         if(dbkey.length() != 0) {
