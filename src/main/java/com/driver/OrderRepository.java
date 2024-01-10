@@ -75,6 +75,7 @@
 
 package com.driver;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -82,6 +83,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 @Repository
+@Component
 public class OrderRepository {
     private HashMap<String, DeliveryPartner> deliveryPartnerDb = new HashMap<>();
     private HashMap<String, Order> orderDb = new HashMap<>();
