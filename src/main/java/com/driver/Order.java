@@ -9,6 +9,8 @@ public class Order {
 
         // The deliveryTime has to converted from string to int and then stored in the attribute
         //deliveryTime  = HH*60 + MM
+        this.deliveryTime = Integer.valueOf(deliveryTime);
+        this.id = id;
         System.out.println("Hello");
     }
 
