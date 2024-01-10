@@ -52,10 +52,15 @@ public class OrderService {
     }
     public Integer getOrderCountByPartnerId(String partnerId){
         HashMap<String, DeliveryPartner> deliveryPartnerDb = repoObj.getDeliveryPartnerDb();
-        if(!deliveryPartnerDb.containsKey(partnerId) || deliveryPartnerDb.get(partnerId) == null){
+        DeliveryPartner partner = deliveryPartnerDb.get(partnerId);
+        if(partner == null){
             return 0;
         }
-        return deliveryPartnerDb.get(partnerId).getNumberOfOrders();
+        return partner.getNumberOfOrders();
+//        if(!deliveryPartnerDb.containsKey(partnerId) || deliveryPartnerDb.get(partnerId) == null){
+//            return 0;
+//        }
+//        return deliveryPartnerDb.get(partnerId).getNumberOfOrders();
     }
 
     public List<String> getOrdersByPartnerId(String partnerId){
