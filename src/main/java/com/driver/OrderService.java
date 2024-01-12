@@ -118,6 +118,7 @@ public class OrderService {
         if(!deliveryPartnerDb.containsKey(partnerId) || !orderDb.containsKey(orderId)){
             return;
         }
+
         List<String> temp = orderDeliveryPartnersDb.getOrDefault(partnerId, new ArrayList<>());
         temp.add(orderId);
         orderDeliveryPartnersDb.put(partnerId, temp);
