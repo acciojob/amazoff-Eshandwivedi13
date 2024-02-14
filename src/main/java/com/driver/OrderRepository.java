@@ -93,10 +93,9 @@ public class OrderRepository {
     public void addOrder(Order order){
         String dbkey = order.getId();
         int dTime = order.getDeliveryTime();
-        orderDb.put(dbkey, order);
-//        if(dbkey.length() != 0 && dTime != 0){
-//            orderDb.put(dbkey, order);
-//        }
+        if(dbkey.length() != 0 && dTime != 0){
+            orderDb.put(dbkey, order);
+        }
     }
     public Order getOrderById(String orderId){
 //       HashMap<String, Order> orderDb = repoObj.getOrderDb();
