@@ -182,9 +182,8 @@ public class OrderController {
 
     @GetMapping("/get-order-by-id/{orderId}")
     public ResponseEntity<Order> getOrderById(@PathVariable String orderId){
-        Order order= null;
         //order should be returned with an orderId.
-        order = serviceObj.getOrderById(orderId);
+        Order order = serviceObj.getOrderById(orderId);
         return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 
@@ -201,8 +200,7 @@ public class OrderController {
     @GetMapping("/get-order-count-by-partner-id/{partnerId}")
     public ResponseEntity<Integer> getOrderCountByPartnerId(@PathVariable String partnerId){
 
-        Integer orderCount = 0;
-        orderCount = serviceObj.getOrderCountByPartnerId(partnerId);
+        Integer orderCount = serviceObj.getOrderCountByPartnerId(partnerId);
         //orderCount should denote the orders given by a partner-id
 
         return new ResponseEntity<>(orderCount, HttpStatus.CREATED);

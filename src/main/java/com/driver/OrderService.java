@@ -130,9 +130,9 @@ public class OrderService {
 
     }
     public Order getOrderById(String orderId){
-//       HashMap<String, Order> orderDb = repoObj.getOrderDb();
-//        return orderDb.getOrDefault(orderId, null);
-        return repoObj.getOrderById(orderId);
+        HashMap<String, Order> orderDb = repoObj.getOrderDb();
+        return orderDb.getOrDefault(orderId, null);
+//        return repoObj.getOrderById(orderId);
     }
     public DeliveryPartner getPartnerById(String partnerId){
         HashMap<String, DeliveryPartner>  partnerDb = repoObj.getDeliveryPartnerDb();
