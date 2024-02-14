@@ -83,7 +83,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 @Repository
-@Component
+//@Component
 public class OrderRepository {
     private HashMap<String, DeliveryPartner> deliveryPartnerDb = new HashMap<>();
     private HashMap<String, Order> orderDb = new HashMap<>();

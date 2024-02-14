@@ -99,7 +99,7 @@ import java.util.HashSet;
 import java.util.List;
 
 @Service
-@Component
+//@Component
 public class OrderService {
     @Autowired
     OrderRepository repoObj;
